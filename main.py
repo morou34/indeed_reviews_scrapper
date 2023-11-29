@@ -13,7 +13,7 @@ def elapsed_time(duration):
 
 
 # Ensure the output directory exists
-output_directory = "companies_reviews"
+output_directory = "companies_links"
 if not os.path.exists(output_directory):
     os.makedirs(output_directory)
 
@@ -89,5 +89,3 @@ if __name__ == "__main__":
         print(f"\n-------> Scrapping is finished ({formatted_time})... \n")
     else:
         print("\nNo companies to scrap *_* ...\n")
-
-    

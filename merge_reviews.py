@@ -3,15 +3,20 @@ import csv
 from datetime import datetime
 
 
-# Ensure the output directory exists
-output_directory = "companies_reviews"
-if not os.path.exists(output_directory):
-    os.makedirs(output_directory)
+output_directory = "companies_links"
 
 
 def merge_csv_files(output_folder):
-    all_files = os.listdir(output_folder)
-    csv_files = [f for f in all_files if f.endswith(".csv")]
+    # Ensure the output directory exists
+    if not os.path.exists(output_directory):
+        print("No reviews to merge, please run the scrapper first ... ")
+        return
+    else:
+        all_files = os.listdir(output_folder)
+        csv_files = [f for f in all_files if f.endswith(".csv")]
+        if len(csv_files) < 1:
+            print("No files to merge ...")
+            return
 
     # Get current date
     current_date = datetime.now().strftime("%Y%m%d")  # Format: YYYYMMDD
@@ -37,4 +42,4 @@ def merge_csv_files(output_folder):
                     writer.writerow(row)
 
 
-merge_csv_files("companies_reviews")
+merge_csv_files(output_directory)
