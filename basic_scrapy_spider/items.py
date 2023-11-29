@@ -12,4 +12,20 @@ class QuoteItem(scrapy.Item):
     author = scrapy.Field()
     tags = scrapy.Field()
 
-    
+
+class ReviewItem(scrapy.Item):
+    company = scrapy.Field()
+    title = scrapy.Field()
+    body = scrapy.Field()
+    date = scrapy.Field()
+    location = scrapy.Field()
+    job_role = scrapy.Field()
+    job_status = scrapy.Field()
+    rating = scrapy.Field()
+    work_balance = scrapy.Field()
+    benefits = scrapy.Field()
+    security_adv = scrapy.Field()
+    management = scrapy.Field()
+    culture = scrapy.Field()
+    pros = scrapy.Field()
+    cons = scrapy.Field()
