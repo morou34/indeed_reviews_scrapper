@@ -1,8 +1,0 @@
-- scrapping company to company works,
-- Check how to implement stop-resume withing the same company.
-
-- before that check how fast scrapping is for large companies with +10K reviews
-use the premium plan for that.
-
-- implement date filtering.
-
