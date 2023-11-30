@@ -1,14 +1,15 @@
 import os
 import csv
 from datetime import datetime
+from utils import date_for_filename
 
-
-output_directory = "companies_links"
+input_directory = "companies_reviews"
+output_directory = "merged_reviews"
 
 
 def merge_csv_files(output_folder):
     # Ensure the output directory exists
-    if not os.path.exists(output_directory):
+    if not os.path.exists(input_directory):
         print("No reviews to merge, please run the scrapper first ... ")
         return
     else:
@@ -19,8 +20,9 @@ def merge_csv_files(output_folder):
             return
 
     # Get current date
-    current_date = datetime.now().strftime("%Y%m%d")  # Format: YYYYMMDD
+    current_date = date_for_filename()  # Format: YYYYMMDD
     merged_filename = f"all_reviews_{current_date}.csv"  # New filename with date
+    merged_filename = os.path.join(output_directory, merged_filename)
 
     with open(merged_filename, "w", newline="", encoding="utf-8") as merged_file:
         writer = None
@@ -29,17 +31,19 @@ def merge_csv_files(output_folder):
                 os.path.join(output_folder, filename), "r", newline="", encoding="utf-8"
             ) as file:
                 reader = csv.reader(file)
-                if i == 0:
-                    # Write header from the first file
-                    writer = csv.writer(merged_file)
-                    writer.writerow(next(reader))
-                else:
-                    # Skip the header for subsequent files
-                    next(reader)
+                rows = list(reader)
 
+                if len(rows) == 0:
+                    # Skip empty files
+                    continue
+
+                if i == 0:
+                    # Write header from the first non-empty file
+                    writer = csv.writer(merged_file)
+                    writer.writerow(rows[0])
                 # Write the data
-                for row in reader:
+                for row in rows[1:]:  # Skip the header row for all files
                     writer.writerow(row)
 
 
-merge_csv_files(output_directory)
+merge_csv_files(input_directory)

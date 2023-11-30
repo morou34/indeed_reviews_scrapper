@@ -1,9 +1,11 @@
 # quotes.py
 from basic_scrapy_spider.items import QuoteItem
 from basic_scrapy_spider.items import ReviewItem
+from basic_scrapy_spider.pipelines import convert_date
 import scrapy
 from .selectors import *
 from urllib.parse import urljoin
+import dateutil.parser
 
 
 def find_rating(data, category):
@@ -17,9 +19,13 @@ class QuotesSpider(scrapy.Spider):
     name = "reviews"
     allowed_domains = ["indeed.com"]
 
-    def __init__(self, url_list=None, *args, **kwargs):
+    def __init__(self, url_list=None, cut_off_date=None, *args, **kwargs):
         super(QuotesSpider, self).__init__(*args, **kwargs)
         self.start_urls = url_list or []
+        self.cut_off_date = (
+            dateutil.parser.parse(cut_off_date) if cut_off_date else None
+        )
+        self.isCutOffActivated = False
 
     def parse(self, response):
         reviews = response.css(REVIEW_CARD)
@@ -37,6 +43,15 @@ class QuotesSpider(scrapy.Spider):
             # job info eg: Cashier (Former Employee) - Muskegon, MI - Mars 25, 2023
             job_info = review.css(JOB_INFO_SELECTOR).extract()
             date = job_info[-1].strip() if job_info else None
+            collected_date = dateutil.parser.parse(date) if date else None
+
+            if (
+                self.cut_off_date
+                and collected_date
+                and collected_date < self.cut_off_date
+            ):
+                self.isCutOffActivated = True
+                continue
 
             # Extract the Job title and info
             job_role = review.css(JOB_ROLE_SELECTOR).extract_first()
@@ -91,9 +106,12 @@ class QuotesSpider(scrapy.Spider):
 
             yield review_item
 
-        next_page = response.css('li a[data-tn-element="next-page"]::attr(href)').get()
-        if next_page is not None:
-            base_url = "https://www.indeed.com"
-            next_page_url = urljoin(base_url, next_page)
-            print(f"\n---------->{next_page_url}")
-            yield response.follow(next_page_url, callback=self.parse)
+        if not self.isCutOffActivated:
+            next_page = response.css(
+                'li a[data-tn-element="next-page"]::attr(href)'
+            ).get()
+            if next_page is not None:
+                base_url = "https://www.indeed.com"
+                next_page_url = urljoin(base_url, next_page)
+                print(f"\n---------->{next_page_url}")
+                yield response.follow(next_page_url, callback=self.parse)
