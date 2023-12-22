@@ -2,6 +2,7 @@
 
 # Selectors
 COMPANY_NAME = 'div[itemprop="name"].css-19rjr9w.e1wnkr790::text'
+COMPANY_NAME_SELECTOR = 'h1.css-1bpmjfq.e1tiznh50::text'
 TITLE_SELECTOR = 'h2[data-testid="title"] span.css-15r9gu1.eu4oa1w0::text'
 REVIEW_CARD = ".css-lw17hn.eu4oa1w0"
 REVIEW_BODY_SELECTOR = 'span[itemprop="reviewBody"] span.css-1cxc9zk.e1wnkr790 span.css-15r9gu1.eu4oa1w0::text'

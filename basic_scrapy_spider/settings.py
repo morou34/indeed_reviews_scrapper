@@ -20,6 +20,8 @@ NEWSPIDER_MODULE = "basic_scrapy_spider.spiders"
 ROBOTSTXT_OBEY = False
 
 SCRAPEOPS_API_KEY = "a0c5d51d-749b-4a08-b663-46d4aea5b3b6"
+
+
 SCRAPEOPS_PROXY_ENABLED = True
 
 DOWNLOADER_MIDDLEWARES = {
@@ -28,7 +30,7 @@ DOWNLOADER_MIDDLEWARES = {
 
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-# CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 1
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay

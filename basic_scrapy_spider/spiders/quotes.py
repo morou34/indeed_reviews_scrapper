@@ -29,7 +29,7 @@ class QuotesSpider(scrapy.Spider):
 
     def parse(self, response):
         reviews = response.css(REVIEW_CARD)
-        company_name = response.css(COMPANY_NAME).get()
+        company_name = response.css(COMPANY_NAME_SELECTOR).get()
         review_item = ReviewItem()
 
         for review in reviews:

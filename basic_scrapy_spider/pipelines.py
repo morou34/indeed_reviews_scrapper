@@ -47,6 +47,18 @@ class ReviewScraperPipeline:
     def process_item(self, item, spider):
         adapter = ItemAdapter(item)
 
+        # Clean company name
+
+        company = adapter.get("company")
+        if company != None and "Employee Reviews" in company:
+            clean_company = company.split("Employee Reviews")[0].strip()
+            adapter["company"] = clean_company
+        elif company != None and "Working at" in company:
+            clean_company = company.split(":")[0].split("at ")[-1].strip()
+            adapter["company"] = clean_company
+        else:
+            adapter["company"] = company
+
         # remove white space from all strings
         field_names = adapter.field_names()
         for field in field_names:
