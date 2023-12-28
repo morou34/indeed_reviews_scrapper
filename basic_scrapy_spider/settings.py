@@ -20,9 +20,9 @@ NEWSPIDER_MODULE = "basic_scrapy_spider.spiders"
 ROBOTSTXT_OBEY = False
 
 SCRAPEOPS_API_KEY = "a0c5d51d-749b-4a08-b663-46d4aea5b3b6"
-
-
 SCRAPEOPS_PROXY_ENABLED = True
+
+
 
 DOWNLOADER_MIDDLEWARES = {
     "scrapeops_scrapy_proxy_sdk.scrapeops_scrapy_proxy_sdk.ScrapeOpsScrapyProxySdk": 725,
