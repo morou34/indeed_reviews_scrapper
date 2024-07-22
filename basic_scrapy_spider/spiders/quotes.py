@@ -107,11 +107,10 @@ class QuotesSpider(scrapy.Spider):
             yield review_item
 
         if not self.isCutOffActivated:
-            next_page = response.css(
-                'li a[data-tn-element="next-page"]::attr(href)'
-            ).get()
+            next_page = response.css('li a[data-testid="next-page"]::attr(href)').get()
+
             if next_page is not None:
                 base_url = "https://www.indeed.com"
                 next_page_url = urljoin(base_url, next_page)
-                print(f"\n---------->{next_page_url}")
+                print(f"\n\n\n\n------------------->{next_page_url}")
                 yield response.follow(next_page_url, callback=self.parse)

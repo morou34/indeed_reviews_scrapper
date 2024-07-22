@@ -19,9 +19,11 @@ NEWSPIDER_MODULE = "basic_scrapy_spider.spiders"
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
-SCRAPEOPS_API_KEY = "a0c5d51d-749b-4a08-b663-46d4aea5b3b6"
-SCRAPEOPS_PROXY_ENABLED = True
 
+SCRAPEOPS_API_KEY = "YOUR_SCRAPEOPS_API_KEY"
+# if you don't have one create an account here: https://scrapeops.io/
+
+SCRAPEOPS_PROXY_ENABLED = True
 
 
 DOWNLOADER_MIDDLEWARES = {
