@@ -5,8 +5,8 @@ from scrapy.linkextractors import LinkExtractor
 
 class AntiBlockerSpider(CrawlSpider):
     name = "antiblocker_spider"
-    allowed_domains = ["example.com"]
-    start_urls = ["http://example.com"]
+    allowed_domains = ["indeed.com"]
+    start_urls = ["http://indeed.com"]
     custom_settings = {
         "DOWNLOADER_MIDDLEWARES": {
             "myproject.middlewares.RotateUserAgentMiddleware": 543,
@@ -47,9 +47,9 @@ class RotateUserAgentMiddleware:
 
 class ProxyMiddleware:
     proxies = [
-        "http://proxy1.example.com:8000",
-        "http://proxy2.example.com:8000",
-        "http://proxy3.example.com:8000",
+        "http://proxy1.indeed.com:8000",
+        "http://proxy2.indeed.com:8000",
+        "http://proxy3.indeed.com:8000",
     ]
 
     def process_request(self, request, spider):
